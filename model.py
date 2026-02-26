@@ -191,6 +191,24 @@ def calc_revenue(cfg, occ):
     df["gap_fee_portion"] = df["net_revenue"]-df["ccs_portion"]
     return df
 
+# -- Staffing Block Converter --
+
+def staffing_blocks_to_monthly_override(blocks, start_month=1):
+    """Convert structured staffing blocks [{count, months}, ...] to {month: count} dict.
+    Each block specifies a headcount level and how many months it applies for,
+    running sequentially from start_month."""
+    if not blocks:
+        return None
+    result = {}
+    m = start_month
+    for block in blocks:
+        count = int(block.get("count", 0))
+        duration = int(block.get("months", 1))
+        for _ in range(duration):
+            result[m] = count
+            m += 1
+    return result if result else None
+
 # -- B4+B5: Staffing (ECT/Support overrides, capacity compliance) --
 
 def calc_staffing(cfg, rev):
