@@ -1,4 +1,3 @@
-# model.py
 """
 BrightBlocks ELC — Childcare PE Financial Model Engine
 Converts Excel model to parameterised Python. No UI code.
